@@ -1,6 +1,7 @@
 # 🚀 Deployment Guide - Vercel (Recommended)
 
 ## Why Vercel?
+
 - **Free hosting** for Next.js apps
 - **Automatic deployments** from GitHub
 - **Built-in CI/CD**
@@ -63,6 +64,7 @@ git push -u origin main
 ## 🔄 Automatic Updates
 
 From now on, every time you push to GitHub:
+
 - Vercel automatically rebuilds and redeploys
 - Changes go live in ~2 minutes
 - No manual steps needed!
@@ -85,9 +87,10 @@ git push
 ⚠️ **Note:** GitHub Pages won't work for the contact form API route, but you can export a static version:
 
 1. Update `next.config.ts`:
+
 ```typescript
 const nextConfig = {
-  output: 'export',
+  output: "export",
   images: {
     unoptimized: true
   }
@@ -95,6 +98,7 @@ const nextConfig = {
 ```
 
 2. Build and deploy:
+
 ```bash
 npm run build
 # Upload the 'out' folder to GitHub Pages
