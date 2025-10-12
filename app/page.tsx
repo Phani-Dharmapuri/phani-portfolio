@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -6,6 +7,21 @@ export default function Home() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-4">
         <div className="container mx-auto text-center">
+          {/* Professional Photo */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative w-48 h-48 md:w-64 md:h-64">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-xl opacity-30 animate-pulse"></div>
+              <Image
+                src="/profile.jpg"
+                alt="Phani Kumar - Professional Photo"
+                width={256}
+                height={256}
+                className="relative rounded-full border-4 border-blue-600/50 shadow-2xl object-cover w-full h-full"
+                priority
+              />
+            </div>
+          </div>
+
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
             Phani Kumar
           </h1>
