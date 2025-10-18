@@ -5,12 +5,13 @@ import Footer from "../components/Footer";
 import CursorEffect from "../components/CursorEffect";
 
 export const metadata: Metadata = {
-  title: "Phani Kumar - Principal SDET & Quality Engineering Leader",
-  description: "Portfolio of Phani Kumar, Principal SDET with 18 years of experience in test automation, CI/CD, and digital transformation for Fortune 500 companies.",
+  title: "Phani Kumar - AI Engineering Leader, Quality Engineering",
+  description:
+    "Portfolio of Phani Kumar, Principal SDET with 18 years of experience in test automation, CI/CD, and digital transformation for Fortune 500 companies."
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {

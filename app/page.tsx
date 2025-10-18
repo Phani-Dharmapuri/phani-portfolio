@@ -23,7 +23,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            Phani Kumar
+            Hello! I'm Phani
           </h1>
           <h2 className="text-2xl md:text-4xl font-semibold mb-6 text-gray-300">
             AI Engineering Leader, Quality Engineering
@@ -113,7 +113,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-gradient-to-t from-blue-900/20 to-transparent">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Transform Your QA Strategy?
+            Ready to Transform Your AI Quality Engineering Strategy?
           </h2>
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
             Let's discuss how I can help drive quality excellence and automation
