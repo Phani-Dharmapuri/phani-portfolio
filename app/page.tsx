@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="relative z-10">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-4">
+      <section className="min-h-screen flex items-center justify-center px-4 -mt-24">
         <div className="container mx-auto text-center">
           {/* Professional Photo */}
           <div className="mb-8 flex justify-center">
