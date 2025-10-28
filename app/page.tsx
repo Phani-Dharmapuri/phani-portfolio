@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import ChatBot from "@/components/ChatBot";
 
 export default function Home() {
   return (
@@ -10,13 +11,12 @@ export default function Home() {
           {/* Professional Photo */}
           <div className="mb-8 flex justify-center">
             <div className="relative w-48 h-48 md:w-64 md:h-64">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-xl opacity-30 animate-pulse"></div>
               <Image
                 src="/profile.jpg"
                 alt="Phani Kumar - Professional Photo"
                 width={256}
                 height={256}
-                className="relative rounded-full border-4 border-blue-600/50 shadow-2xl object-cover w-full h-full"
+                className="rounded-full object-cover w-full h-full"
                 priority
               />
             </div>
@@ -33,7 +33,7 @@ export default function Home() {
             test automation strategy, technical leadership, and large-scale
             digital transformation for Fortune 500 companies.
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center mb-8">
             <Link
               href="/about"
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors"
@@ -46,6 +46,11 @@ export default function Home() {
             >
               Get In Touch
             </Link>
+          </div>
+
+          {/* ChatBot Input Field */}
+          <div className="max-w-3xl mx-auto mt-8">
+            <ChatBot />
           </div>
         </div>
       </section>

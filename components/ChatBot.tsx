@@ -8,182 +8,134 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatOption {
+interface QuickOption {
+  icon: string;
   text: string;
-  next: string;
-}
-
-interface ChatNode {
-  message: string;
-  options?: ChatOption[];
+  query: string;
 }
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [currentNode, setCurrentNode] = useState("start");
+  const [inputValue, setInputValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
 
-  // Scripted conversation flow
-  const chatFlow: Record<string, ChatNode> = {
-    start: {
-      message:
-        "👋 Hi! I'm Phani's AI assistant. I can help you learn about his experience, skills, and availability. What would you like to know?",
-      options: [
-        { text: "📊 Experience & Background", next: "experience" },
-        { text: "🛠️ Technical Skills", next: "skills" },
-        { text: "📁 Case Studies", next: "case-studies" },
-        { text: "📅 Availability", next: "availability" }
-      ]
+  // Quick action options
+  const quickOptions: QuickOption[] = [
+    {
+      icon: "📊",
+      text: "Experience & Background",
+      query: "Tell me about your experience"
     },
-    experience: {
-      message:
-        "Phani has 18 years of experience as a Principal SDET and Quality Engineering Leader. He's worked with Fortune 500 companies like Microsoft, Accenture, and Deluxe, leading digital transformation and test automation initiatives.\n\nKey highlights:\n• Led global testing teams (5-50+ members)\n• Architected enterprise-level test frameworks\n• Implemented AI/ML testing strategies\n• Drove DevOps and CI/CD adoption",
-      options: [
-        { text: "🤖 Tell me about AI/Automation work", next: "ai-automation" },
-        { text: "☁️ Cloud & DevOps experience?", next: "cloud-devops" },
-        { text: "👥 Leadership experience?", next: "leadership" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
+    {
+      icon: "🛠️",
+      text: "Technical Skills",
+      query: "What are your technical skills?"
     },
-    skills: {
-      message:
-        "Phani's technical expertise spans:\n\n🧪 Testing & Automation:\n• Selenium, Appium, Cypress, Playwright\n• Java, Python, TypeScript, C#\n• BDD/Cucumber, TestNG, JUnit\n\n☁️ Cloud & DevOps:\n• AWS (Solutions Architect certified)\n• Docker, Kubernetes, Jenkins\n• CI/CD pipelines (GitHub Actions, Azure DevOps)\n\n🤖 AI/ML:\n• LLM testing & validation\n• RAG evaluation frameworks\n• AI model quality assurance",
-      options: [
-        { text: "📚 More technical details", next: "technical-details" },
-        { text: "📜 Certifications?", next: "certifications" },
-        { text: "📁 Show me case studies", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
+    { icon: "🤖", text: "AI/ML Projects", query: "Tell me about AI projects" },
+    {
+      icon: "☁️",
+      text: "Cloud & DevOps",
+      query: "What's your cloud experience?"
     },
-    "ai-automation": {
-      message:
-        "Phani recently led groundbreaking AI testing work:\n\n🏦 UWM AI Underwriting System:\n• Developed RAG evaluation framework\n• Created LLM response validation system\n• Built hallucination detection mechanisms\n• Reduced testing time by 40%\n• Achieved 95% accuracy in automated AI validation\n\nHe specializes in testing AI systems, LLMs, and ensuring responsible AI deployment.",
-      options: [
-        { text: "🔍 Tell me more about this project", next: "uwm-case-study" },
-        { text: "📊 Other AI projects?", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "cloud-devops": {
-      message:
-        "Phani has extensive cloud and DevOps experience:\n\n☁️ AWS Cloud Migration (Deluxe):\n• Led migration of 50+ microservices to AWS\n• Implemented multi-region deployment strategy\n• Set up auto-scaling and disaster recovery\n• Reduced infrastructure costs by $110K annually\n• Achieved zero downtime during migration\n\n🔧 DevOps Leadership:\n• Built CI/CD pipelines from scratch\n• Containerized legacy applications\n• Implemented infrastructure as code (Terraform)\n• Established monitoring with CloudWatch/Grafana",
-      options: [
-        { text: "📈 What were the results?", next: "metrics" },
-        { text: "📁 Other projects?", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    leadership: {
-      message:
-        "Phani has proven leadership experience:\n\n👥 Team Building:\n• Scaled testing team from 5 to 50+ members\n• Managed global teams across US, India, Philippines\n• Mentored 20+ engineers to senior positions\n\n📊 Strategic Impact:\n• Increased test coverage from 40% to 70%\n• Reduced defect leakage by 35%\n• Cut testing cycle time by 50%\n• Saved $500K+ through automation\n\n🎯 He excels at building high-performing teams and driving quality culture.",
-      options: [
-        { text: "📈 Show me the metrics", next: "metrics" },
-        { text: "📁 Case studies", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "case-studies": {
-      message:
-        "Here are Phani's key projects:\n\n1. 🏦 UWM AI Underwriting - RAG/LLM testing (40% faster)\n2. 💳 Deluxe AWS Migration - Cloud transformation ($110K saved)\n3. 🏢 Accenture Testing COE - Built 50+ member team\n4. 📱 Microsoft Windows Phone - Performance testing\n\nWhich one interests you?",
-      options: [
-        { text: "🏦 UWM AI Project", next: "uwm-case-study" },
-        { text: "💳 Deluxe AWS Migration", next: "aws-migration" },
-        { text: "🏢 Accenture Testing COE", next: "accenture-tcoe" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "uwm-case-study": {
-      message:
-        "🏦 UWM AI Underwriting System\n\nChallenge: Test an AI system that processes mortgage documents using LLMs and RAG.\n\nSolution:\n• Built RAG evaluation framework\n• Created prompt validation system\n• Developed hallucination detection\n• Automated end-to-end AI testing\n\nResults:\n✅ 40% reduction in testing time\n✅ 95% accuracy in automated validation\n✅ Zero AI-related production issues\n✅ Scalable framework for future AI features",
-      options: [
-        { text: "🛠️ What tools/tech were used?", next: "technical-details" },
-        { text: "📁 See other projects", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "aws-migration": {
-      message:
-        "💳 Deluxe Corporation - AWS Cloud Migration\n\nChallenge: Migrate 50+ legacy microservices to AWS with zero downtime.\n\nSolution:\n• Multi-region AWS architecture\n• Containerization with Docker/ECS\n• Automated testing in cloud environment\n• Blue-green deployment strategy\n\nResults:\n✅ $110K annual cost savings\n✅ Zero downtime during migration\n✅ 99.99% uptime SLA achieved\n✅ 60% faster deployment cycles",
-      options: [
-        { text: "📊 More impact metrics", next: "metrics" },
-        { text: "📁 See other projects", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "accenture-tcoe": {
-      message:
-        "🏢 Accenture - Testing Center of Excellence\n\nChallenge: Build enterprise-wide testing practice from ground up.\n\nSolution:\n• Established testing standards & frameworks\n• Recruited and trained 50+ QA engineers\n• Implemented test automation across 20+ projects\n• Created reusable component library\n\nResults:\n✅ Team grew from 5 to 50+ members\n✅ $500K+ savings through automation\n✅ 95% employee retention rate\n✅ Served as blueprint for other departments",
-      options: [
-        { text: "👥 Leadership approach?", next: "leadership" },
-        { text: "📁 See other projects", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    certifications: {
-      message:
-        "📜 Professional Certifications:\n\n• AWS Certified Solutions Architect\n• AWS Certified Developer Associate\n• Certified Scrum Master (CSM)\n• ISTQB Advanced Test Automation Engineer\n• SAFe 5 Agilist\n\nPhani continuously updates his skills and stays current with industry trends.",
-      options: [
-        { text: "🛠️ Technical skills", next: "skills" },
-        { text: "📁 Case studies", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "technical-details": {
-      message:
-        "🛠️ Technical Implementation Highlights:\n\n🧪 Testing Frameworks:\n• Custom Page Object Model architecture\n• Data-driven testing with Excel/JSON\n• API testing with REST Assured\n• Performance testing with JMeter/Gatling\n\n🤖 AI Testing Methodology:\n• Prompt engineering validation\n• Output consistency checks\n• Hallucination detection algorithms\n• Semantic similarity scoring\n\n☁️ CI/CD Integration:\n• Jenkins/GitHub Actions pipelines\n• Parallel test execution\n• Automated reporting dashboards\n• Slack/Teams notifications",
-      options: [
-        { text: "📊 Show me the impact", next: "metrics" },
-        { text: "📁 Case studies", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    metrics: {
-      message:
-        "📊 Key Impact Metrics:\n\n👥 Team Leadership:\n• Scaled teams 10x (5 → 50+ members)\n• 95% retention rate\n• 20+ engineers mentored to senior roles\n\n📈 Quality Improvements:\n• Test coverage: 40% → 70%\n• Defect reduction: 35%\n• Testing cycle time: -50%\n\n💰 Cost Optimization:\n• $500K+ automation savings\n• $110K cloud infrastructure savings\n• 40% faster time-to-market",
-      options: [
-        {
-          text: "📁 See the projects behind these numbers",
-          next: "case-studies"
-        },
-        { text: "👥 Leadership style", next: "leadership" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    availability: {
-      message:
-        "📅 Phani's Availability:\n\n✅ Open to new opportunities\n📍 Based in Detroit Metro, Michigan\n🌍 Open to remote work or hybrid roles\n🎯 Interested in: Leadership roles, consulting, or speaking engagements\n\n📧 Contact: dharmapuri.phani@gmail.com\n💼 LinkedIn: linkedin.com/in/phani-dharmapuri\n\nTypically responds within 24 hours!",
-      options: [
-        { text: "📧 Go to contact page", next: "contact-form" },
-        { text: "📁 Review case studies first", next: "case-studies" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
-    },
-    "contact-form": {
-      message:
-        "Great! You can reach out through:\n\n📧 Email: dharmapuri.phani@gmail.com\n💼 LinkedIn: linkedin.com/in/phani-dharmapuri\n📝 Contact Form: Use the contact page on this portfolio\n\nPhani would love to discuss how he can help with your quality engineering, AI testing, or digital transformation initiatives!",
-      options: [
-        { text: "🔄 Start over", next: "start" },
-        { text: "📁 Learn more about projects", next: "case-studies" },
-        { text: "🛠️ Review skills", next: "skills" }
-      ]
-    },
-    portfolio: {
-      message:
-        "📂 Navigate Portfolio:\n\n• Home - Overview and introduction\n• Experience - Detailed work history\n• Skills - Technical expertise\n• Case Studies - Project deep dives\n• Contact - Get in touch\n\nFeel free to explore, or I can guide you to specific sections!",
-      options: [
-        { text: "📊 Tell me about experience", next: "experience" },
-        { text: "🛠️ Show technical skills", next: "skills" },
-        { text: "🏠 Back to main menu", next: "start" }
-      ]
+    { icon: "📁", text: "Case Studies", query: "Show me your projects" },
+    { icon: "📧", text: "Contact Info", query: "How can I contact you?" }
+  ];
+
+  // Knowledge base for answering questions
+  const knowledgeBase: Record<string, string> = {
+    experience:
+      "Phani has 18 years of experience as a Principal SDET and Quality Engineering Leader. He's worked with Fortune 500 companies like Microsoft, Accenture, and Deluxe, leading digital transformation and test automation initiatives.\n\nKey highlights:\n• Led global testing teams (5-50+ members)\n• Architected enterprise-level test frameworks\n• Implemented AI/ML testing strategies\n• Drove DevOps and CI/CD adoption",
+    skills:
+      "Phani's technical expertise spans:\n\n🧪 Testing & Automation:\n• Selenium, Appium, Cypress, Playwright\n• Java, Python, TypeScript, C#\n• BDD/Cucumber, TestNG, JUnit\n\n☁️ Cloud & DevOps:\n• AWS (Solutions Architect certified)\n• Docker, Kubernetes, Jenkins\n• CI/CD pipelines (GitHub Actions, Azure DevOps)\n\n🤖 AI/ML:\n• LLM testing & validation\n• RAG evaluation frameworks\n• AI model quality assurance",
+    ai: "Phani recently led groundbreaking AI testing work:\n\n🏦 UWM AI Underwriting System:\n• Developed RAG evaluation framework\n• Created LLM response validation system\n• Built hallucination detection mechanisms\n• Reduced testing time by 40%\n• Achieved 95% accuracy in automated AI validation\n\nHe specializes in testing AI systems, LLMs, and ensuring responsible AI deployment.",
+    cloud:
+      "Phani has extensive cloud and DevOps experience:\n\n☁️ AWS Cloud Migration (Deluxe):\n• Led migration of 50+ microservices to AWS\n• Implemented multi-region deployment strategy\n• Set up auto-scaling and disaster recovery\n• Reduced infrastructure costs by $110K annually\n• Achieved zero downtime during migration",
+    leadership:
+      "Phani has proven leadership experience:\n\n👥 Team Building:\n• Scaled testing team from 5 to 50+ members\n• Managed global teams across US, India, Philippines\n• Mentored 20+ engineers to senior positions\n\n📊 Strategic Impact:\n• Increased test coverage from 40% to 70%\n• Reduced defect leakage by 35%\n• Cut testing cycle time by 50%\n• Saved $500K+ through automation",
+    projects:
+      "Here are Phani's key projects:\n\n1. 🏦 UWM AI Underwriting - RAG/LLM testing (40% faster)\n2. 💳 Deluxe AWS Migration - Cloud transformation ($110K saved)\n3. 🏢 Accenture Testing COE - Built 50+ member team\n4. 📱 Microsoft Windows Phone - Performance testing",
+    contact:
+      "� Phani's Availability:\n\n✅ Open to new opportunities\n📍 Based in Detroit Metro, Michigan\n🌍 Open to remote work or hybrid roles\n\n📧 Email: dharmapuri.phani@gmail.com\n� LinkedIn: linkedin.com/in/phani-dharmapuri\n\nTypically responds within 24 hours!",
+    certifications:
+      "📜 Professional Certifications:\n\n• AWS Certified Solutions Architect\n• AWS Certified Developer Associate\n• Certified Scrum Master (CSM)\n• ISTQB Advanced Test Automation Engineer\n• SAFe 5 Agilist"
+  };
+
+  const getResponse = (userInput: string): string => {
+    const input = userInput.toLowerCase();
+
+    // Check for greetings
+    if (input.match(/\b(hi|hello|hey|greetings)\b/)) {
+      return "👋 Hi! I'm Phani's AI assistant. I can help you learn about his experience, skills, projects, and availability. What would you like to know?";
     }
+
+    // Check for goodbye
+    if (input.match(/\b(bye|goodbye|thanks|thank you)\b/)) {
+      return "You're welcome! Feel free to reach out anytime. Have a great day! 👋";
+    }
+
+    // Check for experience/background
+    if (input.match(/\b(experience|background|work|career|history)\b/)) {
+      return knowledgeBase.experience;
+    }
+
+    // Check for skills/technical
+    if (
+      input.match(/\b(skill|technical|technology|tech|programming|language)\b/)
+    ) {
+      return knowledgeBase.skills;
+    }
+
+    // Check for AI/ML
+    if (
+      input.match(
+        /\b(ai|artificial intelligence|machine learning|ml|llm|rag|chatbot)\b/
+      )
+    ) {
+      return knowledgeBase.ai;
+    }
+
+    // Check for cloud/aws/devops
+    if (
+      input.match(
+        /\b(cloud|aws|azure|devops|kubernetes|docker|ci\/cd|jenkins)\b/
+      )
+    ) {
+      return knowledgeBase.cloud;
+    }
+
+    // Check for leadership
+    if (input.match(/\b(leadership|lead|manage|team|mentor)\b/)) {
+      return knowledgeBase.leadership;
+    }
+
+    // Check for projects/case studies
+    if (input.match(/\b(project|case study|work|portfolio|example)\b/)) {
+      return knowledgeBase.projects;
+    }
+
+    // Check for contact/availability
+    if (input.match(/\b(contact|email|reach|available|hire|availability)\b/)) {
+      return knowledgeBase.contact;
+    }
+
+    // Check for certifications
+    if (input.match(/\b(certification|certified|certificate|credential)\b/)) {
+      return knowledgeBase.certifications;
+    }
+
+    // Default response
+    return "I can help you with:\n• Experience & Background\n• Technical Skills\n• AI/ML Projects\n• Cloud & DevOps\n• Leadership Experience\n• Case Studies\n• Contact Information\n• Certifications\n\nWhat would you like to know?";
   };
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       // Initial greeting
       const initialMessage: Message = {
-        text: chatFlow[currentNode].message,
+        text: "👋 Hi! I'm Phani's AI assistant. I can help you learn about his experience, skills, and availability. Type your question below!",
         sender: "bot",
         timestamp: new Date()
       };
@@ -195,114 +147,212 @@ export default function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleOptionClick = (option: ChatOption) => {
-    // Add user's choice to messages
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  const handleSendMessage = () => {
+    if (!inputValue.trim()) return;
+
+    // Open chat window if not already open
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+
+    // Add user's message
     const userMessage: Message = {
-      text: option.text,
+      text: inputValue,
       sender: "user",
       timestamp: new Date()
     };
-
     setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
+    setIsTyping(true);
 
     // Get bot's response after a short delay
     setTimeout(() => {
-      const nextNode = chatFlow[option.next];
-      if (nextNode) {
+      const response = getResponse(inputValue);
+      const botMessage: Message = {
+        text: response,
+        sender: "bot",
+        timestamp: new Date()
+      };
+      setMessages((prev) => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 800);
+  };
+
+  const handleOptionClick = (option: QuickOption) => {
+    setInputValue(option.query);
+    // Trigger send after setting the value
+    setTimeout(() => {
+      if (!isOpen) {
+        setIsOpen(true);
+      }
+      const userMessage: Message = {
+        text: option.query,
+        sender: "user",
+        timestamp: new Date()
+      };
+      setMessages((prev) => [...prev, userMessage]);
+      setIsTyping(true);
+
+      setTimeout(() => {
+        const response = getResponse(option.query);
         const botMessage: Message = {
-          text: nextNode.message,
+          text: response,
           sender: "bot",
           timestamp: new Date()
         };
         setMessages((prev) => [...prev, botMessage]);
-        setCurrentNode(option.next);
-      }
-    }, 500);
+        setIsTyping(false);
+      }, 800);
+    }, 100);
+  };
+
+  const handleInputFocus = () => {
+    setIsOpen(true);
+  };
+
+  const handleInputBlur = () => {
+    // Keep window open when input loses focus
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
   const resetChat = () => {
     setMessages([]);
-    setCurrentNode("start");
+    setInputValue("");
     const initialMessage: Message = {
-      text: chatFlow.start.message,
+      text: "👋 Hi! I'm Phani's AI assistant. I can help you learn about his experience, skills, and availability. Type your question below!",
       sender: "bot",
       timestamp: new Date()
     };
     setMessages([initialMessage]);
   };
 
-  const currentOptions = chatFlow[currentNode]?.options || [];
-
   return (
     <>
-      {/* Floating chat button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-        aria-label="Open chat"
-      >
-        {isOpen ? (
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {/* Inline text input field - reduced width by 40% */}
+      <div className="relative w-[60%] mx-auto">
+        <div className="relative">
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            placeholder="Ask me anything about my portfolio here..."
+            className="w-full px-6 py-4 pr-20 border-2 border-blue-600 bg-black text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-600 placeholder-gray-400 shadow-lg text-base"
+          />
+          <button
+            onClick={handleSendMessage}
+            disabled={!inputValue.trim() || isTyping}
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            aria-label="Send message"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-            />
-          </svg>
-        )}
-      </button>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-      {/* Chat window */}
+      {/* Chat window - fixed position at top-right, below menu */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
+        <div
+          ref={chatWindowRef}
+          className="fixed top-20 right-8 w-[450px] max-w-[calc(100vw-4rem)] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200 animate-slideIn z-50"
+        >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex justify-between items-center">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex justify-between items-center">
             <div>
               <h3 className="font-bold text-lg">Chat with Phani's AI</h3>
               <p className="text-xs text-blue-100">
                 Ask about experience, skills & projects
               </p>
             </div>
-            <button
-              onClick={resetChat}
-              className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
-              title="Reset conversation"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="flex gap-2">
+              <button
+                onClick={resetChat}
+                className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+                title="Reset conversation"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-            </button>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+                title="Close chat"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
+
+          {/* Quick questions section - shows when no messages */}
+          {messages.length === 0 && (
+            <div className="p-4 bg-blue-50 border-b border-blue-100">
+              <p className="text-sm text-gray-700 font-semibold mb-3">
+                Quick questions:
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {quickOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className="text-left px-3 py-2 bg-white hover:bg-blue-100 text-gray-800 rounded-lg transition-all duration-200 text-xs font-medium border border-blue-200 hover:border-blue-300 hover:shadow-sm"
+                  >
+                    <span className="mr-1">{option.icon}</span>
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
@@ -317,7 +367,7 @@ export default function ChatBot() {
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.sender === "bot"
                       ? "bg-white text-gray-800 shadow-sm border border-gray-200"
-                      : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                      : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md"
                   }`}
                 >
                   <p className="text-sm whitespace-pre-line leading-relaxed">
@@ -336,26 +386,78 @@ export default function ChatBot() {
                 </div>
               </div>
             ))}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="bg-white text-gray-800 shadow-sm border border-gray-200 rounded-2xl px-4 py-3">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></span>
+                    <span
+                      className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.1s" }}
+                    ></span>
+                    <span
+                      className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></span>
+                  </div>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Options */}
-          {currentOptions.length > 0 && (
-            <div className="p-4 bg-white border-t border-gray-200 space-y-2">
-              {currentOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  className="w-full text-left px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 text-gray-800 rounded-xl transition-all duration-200 text-sm font-medium border border-blue-200 hover:border-blue-300 hover:shadow-md"
-                  disabled={messages[messages.length - 1]?.sender === "user"}
+          {/* Text Input inside chat */}
+          <div className="p-4 bg-white border-t border-gray-200">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your question..."
+                disabled={isTyping}
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800 placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={!inputValue.trim() || isTyping}
+                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md hover:shadow-lg"
+                aria-label="Send message"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {option.text}
-                </button>
-              ))}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
+                </svg>
+              </button>
             </div>
-          )}
+          </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        .animate-slideIn {
+          animation: slideIn 0.3s ease-out;
+        }
+      `}</style>
     </>
   );
 }
