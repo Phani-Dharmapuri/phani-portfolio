@@ -252,12 +252,12 @@ export default function ChatBot() {
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             placeholder="Ask me anything about my portfolio here..."
-            className="w-full px-6 py-4 pr-20 border-2 border-blue-600 bg-black text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-600 placeholder-gray-400 shadow-lg text-base"
+            className="w-full px-6 py-4 pr-20 border-2 border-white bg-black text-white rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-white placeholder-gray-400 shadow-lg text-base"
           />
           <button
             onClick={handleSendMessage}
             disabled={!inputValue.trim() || isTyping}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-white hover:bg-gray-200 text-black rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
             aria-label="Send message"
           >
             <svg
@@ -284,10 +284,10 @@ export default function ChatBot() {
           className="fixed top-20 right-8 w-[450px] max-w-[calc(100vw-4rem)] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200 animate-slideIn z-50"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex justify-between items-center">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-4 flex justify-between items-center">
             <div>
               <h3 className="font-bold text-lg">Chat with Phani's AI</h3>
-              <p className="text-xs text-blue-100">
+              <p className="text-xs text-gray-300">
                 Ask about experience, skills & projects
               </p>
             </div>
@@ -335,7 +335,7 @@ export default function ChatBot() {
 
           {/* Quick questions section - shows when no messages */}
           {messages.length === 0 && (
-            <div className="p-4 bg-blue-50 border-b border-blue-100">
+            <div className="p-4 bg-gray-50 border-b border-gray-200">
               <p className="text-sm text-gray-700 font-semibold mb-3">
                 Quick questions:
               </p>
@@ -344,7 +344,7 @@ export default function ChatBot() {
                   <button
                     key={index}
                     onClick={() => handleOptionClick(option)}
-                    className="text-left px-3 py-2 bg-white hover:bg-blue-100 text-gray-800 rounded-lg transition-all duration-200 text-xs font-medium border border-blue-200 hover:border-blue-300 hover:shadow-sm"
+                    className="text-left px-3 py-2 bg-white hover:bg-gray-200 text-gray-800 rounded-lg transition-all duration-200 text-xs font-medium border border-gray-300 hover:border-gray-400 hover:shadow-sm"
                   >
                     <span className="mr-1">{option.icon}</span>
                     {option.text}
@@ -367,7 +367,7 @@ export default function ChatBot() {
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.sender === "bot"
                       ? "bg-white text-gray-800 shadow-sm border border-gray-200"
-                      : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md"
+                      : "bg-gray-800 text-white shadow-md"
                   }`}
                 >
                   <p className="text-sm whitespace-pre-line leading-relaxed">
@@ -375,7 +375,7 @@ export default function ChatBot() {
                   </p>
                   <p
                     className={`text-xs mt-2 ${
-                      msg.sender === "bot" ? "text-gray-400" : "text-blue-100"
+                      msg.sender === "bot" ? "text-gray-400" : "text-gray-300"
                     }`}
                   >
                     {msg.timestamp.toLocaleTimeString([], {

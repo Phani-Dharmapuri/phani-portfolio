@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-black text-white antialiased min-h-screen">
+      <body
+        className="text-white antialiased min-h-screen"
+        style={{ backgroundColor: '#0a0a0a' }}
+        suppressHydrationWarning
+      >
         <Header />
         <main className="pt-20">{children}</main>
         <Footer />
