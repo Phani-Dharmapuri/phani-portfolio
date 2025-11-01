@@ -4,9 +4,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Phani Kumar - AI Engineering Leader, Quality Engineering",
+  title: "Phani - AI Engineering Leader, Quality Engineering",
   description:
-    "Portfolio of Phani Kumar, Principal SDET with 18 years of experience in test automation, CI/CD, and digital transformation for Fortune 500 companies."
+    "Portfolio of Phani Kumar, Principal SDET with 18 years of experience in test automation, CI/CD, and digital transformation for Fortune 500 companies.",
+  icons: {
+    icon: '/profile.jpg',
+    shortcut: '/profile.jpg',
+    apple: '/profile.jpg',
+  }
 };
 
 export default function RootLayout({
@@ -18,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className="text-white antialiased min-h-screen"
-        style={{ backgroundColor: '#0a0a0a' }}
+        style={{ backgroundColor: "#0a0a0a" }}
         suppressHydrationWarning
       >
         <Header />
