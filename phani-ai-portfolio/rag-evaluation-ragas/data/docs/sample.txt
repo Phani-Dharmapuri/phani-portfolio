@@ -1,0 +1,8 @@
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with text generation.
+A retriever fetches relevant passages from a document corpus, and those passages are appended to the prompt before the language model produces an answer.
+
+LangChain is a framework designed to simplify the creation of applications using large language models.
+It offers components like chains, agents, tools, and memory, as well as integrations with vector databases and document loaders.
+
+Ragas is an evaluation framework for RAG systems.
+Its core metrics are: faithfulness (measures if the answer is grounded in the retrieved context), answer relevancy (measures how relevant the answer is to the question), context precision (measures the signal-to-noise ratio of retrieved chunks), and context recall (measures how much of the ground-truth is covered by the retrieved context).
