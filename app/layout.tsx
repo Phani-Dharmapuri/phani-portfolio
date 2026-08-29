@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Phani - AI Engineering Leader, Quality Engineering",
   description:
     "Portfolio of Phani Kumar, Principal SDET with 18 years of experience in test automation, CI/CD, and digital transformation for Fortune 500 companies.",
   icons: {
-    icon: '/profile.jpg',
-    shortcut: '/profile.jpg',
-    apple: '/profile.jpg',
+    icon: "/profile.jpg",
+    shortcut: "/profile.jpg",
+    apple: "/profile.jpg"
   }
 };
 
