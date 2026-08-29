@@ -28,7 +28,7 @@ export default function CursorEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Star[]>([]);
   const cursorParticlesRef = useRef<CursorParticle[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0, moving: false });
   const speedRef = useRef(0.5);
   const hueRef = useRef(0);
