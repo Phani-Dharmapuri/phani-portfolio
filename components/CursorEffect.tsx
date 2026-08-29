@@ -97,7 +97,7 @@ export default function CursorEffect() {
           vy: velocityY,
           life: 1.0,
           hue: hueRef.current + Math.random() * 60 - 30,
-          size: Math.random() * 40 + 30, // 30-70px particles
+          size: Math.random() * 40 + 30 // 30-70px particles
         });
       }
 
@@ -212,57 +212,65 @@ export default function CursorEffect() {
       }
 
       // Update and draw cursor particles (liquid effect)
-      cursorParticlesRef.current = cursorParticlesRef.current.filter((particle) => {
-        // Update physics with slight drift
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.vx *= 0.98; // Gentle friction
-        particle.vy *= 0.98;
-        
-        // Add slight upward drift for abstract movement
-        particle.vy -= 0.02;
+      cursorParticlesRef.current = cursorParticlesRef.current.filter(
+        (particle) => {
+          // Update physics with slight drift
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vx *= 0.98; // Gentle friction
+          particle.vy *= 0.98;
 
-        // Decay life faster when not moving
-        const decayRate = mouseRef.current.moving ? 0.018 : 0.05;
-        particle.life -= decayRate;
+          // Add slight upward drift for abstract movement
+          particle.vy -= 0.02;
 
-        if (particle.life <= 0) return false;
+          // Decay life faster when not moving
+          const decayRate = mouseRef.current.moving ? 0.018 : 0.05;
+          particle.life -= decayRate;
 
-        // Draw abstract gradient blob
-        const gradient = ctx.createRadialGradient(
-          particle.x,
-          particle.y,
-          0,
-          particle.x,
-          particle.y,
-          particle.size
-        );
+          if (particle.life <= 0) return false;
 
-        const opacity = particle.life * 0.3; // Subtle opacity
+          // Draw abstract gradient blob
+          const gradient = ctx.createRadialGradient(
+            particle.x,
+            particle.y,
+            0,
+            particle.x,
+            particle.y,
+            particle.size
+          );
 
-        // Multi-color gradient for abstract liquid effect
-        gradient.addColorStop(0, `hsla(${particle.hue}, 90%, 65%, ${opacity})`);
-        gradient.addColorStop(
-          0.4,
-          `hsla(${(particle.hue + 40) % 360}, 85%, 60%, ${opacity * 0.6})`
-        );
-        gradient.addColorStop(
-          0.7,
-          `hsla(${(particle.hue + 80) % 360}, 80%, 55%, ${opacity * 0.3})`
-        );
-        gradient.addColorStop(1, `hsla(${(particle.hue + 120) % 360}, 75%, 50%, 0)`);
+          const opacity = particle.life * 0.3; // Subtle opacity
 
-        ctx.fillStyle = gradient;
-        
-        // Use globalCompositeOperation for better blending
-        ctx.globalCompositeOperation = "lighter";
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalCompositeOperation = "source-over";
+          // Multi-color gradient for abstract liquid effect
+          gradient.addColorStop(
+            0,
+            `hsla(${particle.hue}, 90%, 65%, ${opacity})`
+          );
+          gradient.addColorStop(
+            0.4,
+            `hsla(${(particle.hue + 40) % 360}, 85%, 60%, ${opacity * 0.6})`
+          );
+          gradient.addColorStop(
+            0.7,
+            `hsla(${(particle.hue + 80) % 360}, 80%, 55%, ${opacity * 0.3})`
+          );
+          gradient.addColorStop(
+            1,
+            `hsla(${(particle.hue + 120) % 360}, 75%, 50%, 0)`
+          );
 
-        return true;
-      });
+          ctx.fillStyle = gradient;
+
+          // Use globalCompositeOperation for better blending
+          ctx.globalCompositeOperation = "lighter";
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalCompositeOperation = "source-over";
+
+          return true;
+        }
+      );
 
       // Gradually slow down speed when mouse isn't moving
       speedRef.current = Math.max(0.5, speedRef.current * 0.98);
