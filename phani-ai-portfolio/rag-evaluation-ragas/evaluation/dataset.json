@@ -1,0 +1,23 @@
+{"questions": [
+  {
+    "question": "What is RAG and how does it work?",
+    "ground_truth": "RAG stands for Retrieval-Augmented Generation. It works by first retrieving relevant documents from a knowledge base using a retriever, then passing those documents as context to a language model which generates a grounded answer.",
+    "contexts": [
+      "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with text generation. A retriever fetches relevant passages from a document corpus, and those passages are appended to the prompt before the language model produces an answer."
+    ]
+  },
+  {
+    "question": "What is LangChain used for?",
+    "ground_truth": "LangChain is an open-source framework for building applications powered by large language models. It provides abstractions for chains, agents, memory, and integrations with vector stores, enabling developers to compose complex LLM workflows.",
+    "contexts": [
+      "LangChain is a framework designed to simplify the creation of applications using large language models. It offers components like chains, agents, tools, and memory, as well as integrations with vector databases and document loaders."
+    ]
+  },
+  {
+    "question": "What metrics does Ragas use to evaluate RAG pipelines?",
+    "ground_truth": "Ragas evaluates RAG pipelines using metrics including faithfulness, answer relevancy, context precision, and context recall. Each metric measures a different aspect of retrieval and generation quality.",
+    "contexts": [
+      "Ragas is an evaluation framework for RAG systems. Its core metrics are: faithfulness (measures if the answer is grounded in the retrieved context), answer relevancy (measures how relevant the answer is to the question), context precision (measures the signal-to-noise ratio of retrieved chunks), and context recall (measures how much of the ground-truth is covered by the retrieved context)."
+    ]
+  }
+]}

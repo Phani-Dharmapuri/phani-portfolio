@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    environment {
+        OPENAI_API_BASE = 'http://localhost:5000/v1'
+        OPENAI_API_KEY  = 'copilot'
+        APP_PORT        = '8000'
+        REPORT_PATH     = 'evaluation/report.json'
+    }
+
+    stages {
+        stage('Install') {
+            steps {
+                sh 'make install'
+            }
+        }
+
+        stage('Start RAG App') {
+            steps {
+                sh '''
+                    uvicorn rag.app:app --host 0.0.0.0 --port ${APP_PORT} &
+                    echo $! > .rag_pid
+                    sleep 5
+                    curl -sf http://localhost:${APP_PORT}/health || exit 1
+                '''
+            }
+        }
+
+        stage('Run Evaluation') {
+            steps {
+                sh 'make evaluate'
+            }
+        }
+
+        stage('Publish Report') {
+            steps {
+                archiveArtifacts artifacts: "${REPORT_PATH}", fingerprint: true
+                script {
+                    def report = readJSON file: env.REPORT_PATH
+                    if (!report.passed) {
+                        error("Ragas evaluation FAILED — one or more metrics below threshold. See ${env.REPORT_PATH}.")
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh '''
+                if [ -f .rag_pid ]; then
+                    kill $(cat .rag_pid) || true
+                    rm -f .rag_pid
+                fi
+            '''
+        }
+        success {
+            echo 'All Ragas metrics passed thresholds. Pipeline green.'
+        }
+        failure {
+            echo 'Pipeline failed. Check evaluation/report.json for details.'
+        }
+    }
+}
