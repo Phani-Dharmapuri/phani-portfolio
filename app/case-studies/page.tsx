@@ -95,11 +95,11 @@ export default function CaseStudies() {
           {caseStudies.map((study, index) => (
             <div
               key={index}
-              className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-all hover:shadow-lg hover:shadow-blue-900/20 flex flex-col"
+              className="border border-gray-800 rounded-lg p-6 hover:border-white transition-all hover:shadow-lg hover:shadow-white/5 flex flex-col"
             >
               <div className="mb-4">
                 <h2 className="text-2xl font-bold mb-2">{study.title}</h2>
-                <p className="text-blue-400 text-sm mb-3">{study.company}</p>
+                <p className="text-white text-sm mb-3">{study.company}</p>
                 <p className="text-gray-300 mb-4">{study.description}</p>
               </div>
 
@@ -124,7 +124,7 @@ export default function CaseStudies() {
                 {study.tags.map((tag, tIndex) => (
                   <span
                     key={tIndex}
-                    className="bg-purple-900/20 text-purple-300 px-2 py-1 rounded text-xs border border-purple-800/30"
+                    className="bg-white/5 text-gray-300 px-2 py-1 rounded text-xs border border-white/10"
                   >
                     {tag}
                   </span>
@@ -134,7 +134,7 @@ export default function CaseStudies() {
               <div className="mt-auto">
                 <Link
                   href={`/case-studies/${study.slug}`}
-                  className="inline-block text-blue-400 hover:text-blue-300 transition-colors"
+                  className="inline-block text-white underline decoration-gray-600 hover:decoration-white underline-offset-4 transition-colors"
                 >
                   Read Full Case Study →
                 </Link>

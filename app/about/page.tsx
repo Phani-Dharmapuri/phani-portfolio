@@ -30,7 +30,7 @@ export default function About() {
             Management, and Retail.
           </p>
 
-          <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-lg p-6 mb-8">
+          <div className="bg-white/5 border border-white/10 rounded-lg p-6 mb-8">
             <h2 className="text-2xl font-bold mb-4">Professional Background</h2>
             <ul className="space-y-2 text-gray-300">
               <li>
@@ -48,8 +48,8 @@ export default function About() {
           <h2 className="text-3xl font-bold mb-6 mt-12">Core Expertise</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-blue-400">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-white">
                 AI & Testing
               </h3>
               <ul className="space-y-2 text-gray-300">
@@ -61,8 +61,8 @@ export default function About() {
               </ul>
             </div>
 
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-blue-400">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-white">
                 Automation Frameworks
               </h3>
               <ul className="space-y-2 text-gray-300">
@@ -72,8 +72,8 @@ export default function About() {
               </ul>
             </div>
 
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-blue-400">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-white">
                 Programming & Coding
               </h3>
               <ul className="space-y-2 text-gray-300">
@@ -83,8 +83,8 @@ export default function About() {
               </ul>
             </div>
 
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-blue-400">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-white">
                 Cloud & DevOps
               </h3>
               <ul className="space-y-2 text-gray-300">
@@ -98,25 +98,25 @@ export default function About() {
           <h2 className="text-3xl font-bold mb-6">Key Achievements</h2>
 
           <div className="space-y-4">
-            <div className="border-l-4 border-blue-600 pl-4 py-2">
+            <div className="border-l-4 border-white pl-4 py-2">
               <p className="text-gray-300">
                 <strong>35% reduction</strong> in pre-deployment defects through
                 Shift-Left testing practices
               </p>
             </div>
-            <div className="border-l-4 border-blue-600 pl-4 py-2">
+            <div className="border-l-4 border-white pl-4 py-2">
               <p className="text-gray-300">
                 <strong>70% reduction</strong> in test development time using
                 AI-assisted test generation
               </p>
             </div>
-            <div className="border-l-4 border-blue-600 pl-4 py-2">
+            <div className="border-l-4 border-white pl-4 py-2">
               <p className="text-gray-300">
                 <strong>$110K cost savings</strong> by transitioning from
                 LoadRunner to JMeter/K6/Locust
               </p>
             </div>
-            <div className="border-l-4 border-blue-600 pl-4 py-2">
+            <div className="border-l-4 border-white pl-4 py-2">
               <p className="text-gray-300">
                 <strong>60% increase</strong> in test coverage through
                 comprehensive automation strategies

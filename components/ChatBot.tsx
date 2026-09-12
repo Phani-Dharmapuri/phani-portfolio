@@ -241,7 +241,7 @@ export default function ChatBot() {
   return (
     <>
       {/* Inline text input field - reduced width by 40% */}
-      <div className="relative w-[60%] mx-auto">
+      <div className="relative w-full sm:w-[60%] mx-auto">
         <div className="relative">
           <input
             ref={inputRef}
@@ -281,13 +281,13 @@ export default function ChatBot() {
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className="fixed top-20 right-8 w-[450px] max-w-[calc(100vw-4rem)] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200 animate-slideIn z-50"
+          className="fixed top-20 right-8 w-[450px] max-w-[calc(100vw-4rem)] h-[600px] bg-black rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-800 animate-slideIn z-50"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-4 flex justify-between items-center">
+          <div className="bg-white/5 border-b border-white/10 text-white p-4 flex justify-between items-center">
             <div>
               <h3 className="font-bold text-lg">Chat with Phani's AI</h3>
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-gray-400">
                 Ask about experience, skills & projects
               </p>
             </div>
@@ -335,8 +335,8 @@ export default function ChatBot() {
 
           {/* Quick questions section - shows when no messages */}
           {messages.length === 0 && (
-            <div className="p-4 bg-gray-50 border-b border-gray-200">
-              <p className="text-sm text-gray-700 font-semibold mb-3">
+            <div className="p-4 bg-white/5 border-b border-white/10">
+              <p className="text-sm text-gray-300 font-semibold mb-3">
                 Quick questions:
               </p>
               <div className="grid grid-cols-2 gap-2">
@@ -344,7 +344,7 @@ export default function ChatBot() {
                   <button
                     key={index}
                     onClick={() => handleOptionClick(option)}
-                    className="text-left px-3 py-2 bg-white hover:bg-gray-200 text-gray-800 rounded-lg transition-all duration-200 text-xs font-medium border border-gray-300 hover:border-gray-400 hover:shadow-sm"
+                    className="text-left px-3 py-2 bg-black hover:bg-white hover:text-black text-gray-200 rounded-lg transition-all duration-200 text-xs font-medium border border-gray-700 hover:border-white"
                   >
                     <span className="mr-1">{option.icon}</span>
                     {option.text}
@@ -355,7 +355,7 @@ export default function ChatBot() {
           )}
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -366,8 +366,8 @@ export default function ChatBot() {
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.sender === "bot"
-                      ? "bg-white text-gray-800 shadow-sm border border-gray-200"
-                      : "bg-gray-800 text-white shadow-md"
+                      ? "bg-white/10 text-gray-100 shadow-sm border border-white/10"
+                      : "bg-white text-black shadow-md"
                   }`}
                 >
                   <p className="text-sm whitespace-pre-line leading-relaxed">
@@ -375,7 +375,7 @@ export default function ChatBot() {
                   </p>
                   <p
                     className={`text-xs mt-2 ${
-                      msg.sender === "bot" ? "text-gray-400" : "text-gray-300"
+                      msg.sender === "bot" ? "text-gray-500" : "text-gray-600"
                     }`}
                   >
                     {msg.timestamp.toLocaleTimeString([], {
@@ -388,15 +388,15 @@ export default function ChatBot() {
             ))}
             {isTyping && (
               <div className="flex justify-start">
-                <div className="bg-white text-gray-800 shadow-sm border border-gray-200 rounded-2xl px-4 py-3">
+                <div className="bg-white/10 text-gray-100 shadow-sm border border-white/10 rounded-2xl px-4 py-3">
                   <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></span>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
                     <span
-                      className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                       style={{ animationDelay: "0.1s" }}
                     ></span>
                     <span
-                      className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                       style={{ animationDelay: "0.2s" }}
                     ></span>
                   </div>
@@ -407,7 +407,7 @@ export default function ChatBot() {
           </div>
 
           {/* Text Input inside chat */}
-          <div className="p-4 bg-white border-t border-gray-200">
+          <div className="p-4 bg-black border-t border-gray-800">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -416,12 +416,12 @@ export default function ChatBot() {
                 onKeyPress={handleKeyPress}
                 placeholder="Type your question..."
                 disabled={isTyping}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800 placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-white text-white placeholder-gray-500 disabled:bg-white/10 disabled:cursor-not-allowed"
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isTyping}
-                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md hover:shadow-lg"
+                className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md hover:shadow-lg"
                 aria-label="Send message"
               >
                 <svg

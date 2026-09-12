@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 // SVG Icon Components
 const HomeIcon = () => (
@@ -117,7 +118,41 @@ const GitHubIcon = () => (
   </svg>
 );
 
+const MenuIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4 6h16M4 12h16M4 18h16"
+    />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M6 18L18 6M6 6l12 12"
+    />
+  </svg>
+);
+
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const menuItems = [
     { name: "Home", href: "/", Icon: HomeIcon },
     { name: "About", href: "/about", Icon: UserIcon },
@@ -134,15 +169,16 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 py-3">
         <nav className="flex justify-between items-center">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <Link
               href="/"
               className="text-xl font-bold text-white hover:text-gray-300 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
               Phani Kumar
             </Link>
             {/* Social Icons */}
-            <div className="flex items-center gap-6">
+            <div className="hidden sm:flex items-center gap-6">
               <a
                 href="https://www.linkedin.com/in/phani-kumar-dharmapuri/"
                 target="_blank"
@@ -163,7 +199,9 @@ export default function Header() {
               </a>
             </div>
           </div>
-          <ul className="flex space-x-8">
+
+          {/* Desktop nav */}
+          <ul className="hidden md:flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name} className="group">
                 <Link
@@ -177,7 +215,58 @@ export default function Header() {
               </li>
             ))}
           </ul>
+
+          {/* Mobile menu toggle */}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
         </nav>
+
+        {/* Mobile menu panel */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-3 pt-3 border-t border-gray-900/50">
+            <ul className="flex flex-col gap-1">
+              {menuItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 px-2 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    <item.Icon />
+                    <span>{item.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center gap-6 mt-3 px-2 pt-3 border-t border-gray-900/50">
+              <a
+                href="https://www.linkedin.com/in/phani-kumar-dharmapuri/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="LinkedIn Profile"
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                href="https://github.com/Phani-Dharmapuri"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="GitHub Profile"
+              >
+                <GitHubIcon />
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

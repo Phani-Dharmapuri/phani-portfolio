@@ -156,7 +156,7 @@ export default function Skills() {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-all hover:shadow-lg hover:shadow-blue-900/20"
+              className="border border-gray-800 rounded-lg p-6 hover:border-white transition-all hover:shadow-lg hover:shadow-white/5"
             >
               <div className="flex items-center mb-4">
                 <span className="text-4xl mr-3">{category.icon}</span>
@@ -166,7 +166,7 @@ export default function Skills() {
                 {category.skills.map((skill, skillIndex) => (
                   <span
                     key={skillIndex}
-                    className="bg-blue-900/20 text-blue-300 px-3 py-1 rounded-full text-sm border border-blue-800/30 hover:bg-blue-900/30 transition-colors"
+                    className="bg-white/5 text-gray-300 px-3 py-1 rounded-full text-sm border border-white/10 hover:bg-white/10 transition-colors"
                   >
                     {skill}
                   </span>
@@ -180,24 +180,24 @@ export default function Skills() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-8">Certifications</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-white transition-colors">
               <div className="text-3xl mb-2">☁️</div>
               <h3 className="font-bold mb-1">Azure AI-900</h3>
               <p className="text-sm text-gray-400">
                 Microsoft Azure AI Fundamentals
               </p>
             </div>
-            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-white transition-colors">
               <div className="text-3xl mb-2">🌩️</div>
               <h3 className="font-bold mb-1">AWS Cloud Practitioner</h3>
               <p className="text-sm text-gray-400">Amazon Web Services</p>
             </div>
-            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-white transition-colors">
               <div className="text-3xl mb-2">🏃</div>
               <h3 className="font-bold mb-1">Certified Scrum Master</h3>
               <p className="text-sm text-gray-400">Agile Methodology</p>
             </div>
-            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 text-center hover:border-white transition-colors">
               <div className="text-3xl mb-2">🔧</div>
               <h3 className="font-bold mb-1">HP Accredited</h3>
               <p className="text-sm text-gray-400">
@@ -211,7 +211,7 @@ export default function Skills() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-8">Education</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
               <div className="text-3xl mb-3">🎓</div>
               <h3 className="text-xl font-bold mb-2">
                 Master of Computer Applications
@@ -222,7 +222,7 @@ export default function Skills() {
               </p>
               <p className="text-sm text-gray-500">San Diego, CA, USA</p>
             </div>
-            <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
               <div className="text-3xl mb-3">🎓</div>
               <h3 className="text-xl font-bold mb-2">
                 Master of Business Administration

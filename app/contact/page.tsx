@@ -105,7 +105,7 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-600 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-white transition-colors"
                     placeholder="Your full name"
                   />
                 </div>
@@ -124,7 +124,7 @@ export default function Contact() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-600 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-white transition-colors"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -142,7 +142,7 @@ export default function Contact() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-600 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-white transition-colors"
                     placeholder="Your company name"
                   />
                 </div>
@@ -161,7 +161,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-600 transition-colors resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-white transition-colors resize-none"
                     placeholder="Tell me about your project or opportunity..."
                   />
                 </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-white hover:bg-gray-200 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed text-black font-medium px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -204,44 +204,44 @@ export default function Contact() {
             <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
 
             <div className="space-y-6">
-              <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+              <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
                 <div className="text-3xl mb-3">📧</div>
                 <h3 className="font-bold mb-2">Email</h3>
                 <a
                   href="mailto:dharmapuri.phani@gmail.com"
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-white underline decoration-gray-600 hover:decoration-white underline-offset-4 transition-colors"
                 >
                   dharmapuri.phani@gmail.com
                 </a>
               </div>
 
-              <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+              <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
                 <div className="text-3xl mb-3">💼</div>
                 <h3 className="font-bold mb-2">LinkedIn</h3>
                 <a
                   href="http://www.linkedin.com/in/phani-kumar-dharmapuri"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-white underline decoration-gray-600 hover:decoration-white underline-offset-4 transition-colors"
                 >
                   Connect on LinkedIn
                 </a>
               </div>
 
-              <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+              <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
                 <div className="text-3xl mb-3">🐙</div>
                 <h3 className="font-bold mb-2">GitHub</h3>
                 <a
                   href="https://github.com/Phani-Dharmapuri"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-white underline decoration-gray-600 hover:decoration-white underline-offset-4 transition-colors"
                 >
                   View GitHub Profile
                 </a>
               </div>
 
-              <div className="border border-gray-800 rounded-lg p-6 hover:border-blue-600 transition-colors">
+              <div className="border border-gray-800 rounded-lg p-6 hover:border-white transition-colors">
                 <div className="text-3xl mb-3">📍</div>
                 <h3 className="font-bold mb-2">Location</h3>
                 <p className="text-gray-400">Detroit Metro, MI, USA</p>
@@ -251,7 +251,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="mt-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-lg p-6">
+            <div className="mt-8 bg-white/5 border border-white/10 rounded-lg p-6">
               <h3 className="font-bold mb-3">Areas of Interest</h3>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>• Quality Engineering Leadership Roles</li>

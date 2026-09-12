@@ -122,12 +122,12 @@ export default function Experience() {
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className="border border-gray-800 rounded-lg p-8 hover:border-blue-600 transition-all hover:shadow-lg hover:shadow-blue-900/20"
+              className="border border-gray-800 rounded-lg p-8 hover:border-white transition-all hover:shadow-lg hover:shadow-white/5"
             >
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2">{exp.title}</h2>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                  <p className="text-xl text-blue-400">{exp.company}</p>
+                  <p className="text-xl text-white">{exp.company}</p>
                   <p className="text-gray-400">{exp.period}</p>
                 </div>
                 <p className="text-gray-500">{exp.location}</p>
@@ -140,7 +140,7 @@ export default function Experience() {
                 <ul className="space-y-2">
                   {exp.highlights.map((highlight, hIndex) => (
                     <li key={hIndex} className="flex items-start">
-                      <span className="text-blue-400 mr-2 mt-1">▸</span>
+                      <span className="text-gray-500 mr-2 mt-1">▸</span>
                       <span className="text-gray-300">{highlight}</span>
                     </li>
                   ))}
@@ -155,7 +155,7 @@ export default function Experience() {
                   {exp.technologies.map((tech, tIndex) => (
                     <span
                       key={tIndex}
-                      className="bg-blue-900/20 text-blue-300 px-3 py-1 rounded-full text-sm border border-blue-800/30"
+                      className="bg-white/5 text-gray-300 px-3 py-1 rounded-full text-sm border border-white/10"
                     >
                       {tech}
                     </span>
@@ -167,25 +167,25 @@ export default function Experience() {
         </div>
 
         {/* Career Timeline Stats */}
-        <div className="mt-16 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-lg p-8">
+        <div className="mt-16 bg-white/5 border border-white/10 rounded-lg p-8">
           <h2 className="text-2xl font-bold mb-6 text-center">
             Career Impact Summary
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">18+</div>
+              <div className="text-3xl font-bold text-white mb-2">18+</div>
               <div className="text-sm text-gray-400">Years Experience</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">50+</div>
+              <div className="text-3xl font-bold text-white mb-2">50+</div>
               <div className="text-sm text-gray-400">Team Members Led</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">10+</div>
+              <div className="text-3xl font-bold text-white mb-2">10+</div>
               <div className="text-sm text-gray-400">Major Projects</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">5</div>
+              <div className="text-3xl font-bold text-white mb-2">5</div>
               <div className="text-sm text-gray-400">Countries</div>
             </div>
           </div>
