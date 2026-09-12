@@ -15,22 +15,34 @@ export default function Footer() {
             <h3 className="text-white font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/about"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/experience" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/experience"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   Experience
                 </Link>
               </li>
               <li>
-                <Link href="/case-studies" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/case-studies"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   Case Studies
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/contact"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   Contact
                 </Link>
               </li>
@@ -40,12 +52,22 @@ export default function Footer() {
             <h3 className="text-white font-bold mb-4">Connect</h3>
             <ul className="space-y-2">
               <li>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <a
+                  href="https://www.linkedin.com/in/phani-kumar-dharmapuri/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <a
+                  href="https://github.com/Phani-Dharmapuri/rag-evaluation-ragas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
                   GitHub
                 </a>
               </li>
